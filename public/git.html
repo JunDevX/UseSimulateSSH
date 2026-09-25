@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>UseSimulateSSH — Git over SSH Manual</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #0e1117; color: #c9d1d9; padding: 30px; line-height: 1.6; }
+    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 30px; }
+    h1 { color: #f0883e; font-size: 28px; }
+    .lang-btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #f0883e; font-size: 20px; margin-bottom: 12px; }
+    pre { background: #0d1117; padding: 12px; border-radius: 6px; border: 1px solid #30363d; color: #58a6ff; overflow-x: auto; font-family: monospace; }
+    code { background: #21262d; color: #ff7b72; padding: 3px 6px; border-radius: 4px; font-family: monospace; }
+    a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1 id="git-title">Git через SSH — Руководство (DOCS)</h1>
+    <div>
+      <button class="lang-btn" onclick="toggleGitLang()">EN / RU</button>
+      <a href="/" class="lang-btn" style="margin-left:10px;">Terminal</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 id="step1-title">1. Генерация SSH ключа</h2>
+    <p id="step1-desc">Создание Ed25519 ключа на сервере:</p>
+    <pre>ssh-keygen -t ed25519 -C "your_email@example.com"</pre>
+  </div>
+
+  <div class="card">
+    <h2 id="step2-title">2. Просмотр публичного ключа</h2>
+    <p id="step2-desc">Скопируйте публичный ключ и добавьте в GitHub -> Settings -> SSH and GPG keys:</p>
+    <pre>cat ~/.ssh/id_ed25519.pub</pre>
+  </div>
+
+  <div class="card">
+    <h2 id="step3-title">3. Клонирование репозитория по SSH</h2>
+    <p id="step3-desc">Использование SSH URL формата `git@github.com:User/Repo.git`:</p>
+    <pre>git clone git@github.com:JunDevX/UseSimulateSSH.git</pre>
+  </div>
+
+  <script>
+    let gitLang = 'ru';
+    const gitTexts = {
+      ru: {
+        title: "Git через SSH — Руководство (DOCS)",
+        s1Title: "1. Генерация SSH ключа",
+        s1Desc: "Создание Ed25519 ключа на сервере:",
+        s2Title: "2. Просмотр публичного ключа",
+        s2Desc: "Скопируйте публичный ключ и добавьте в GitHub -> Settings -> SSH and GPG keys:",
+        s3Title: "3. Клонирование репозитория по SSH",
+        s3Desc: "Использование SSH URL формата git@github.com:User/Repo.git:"
+      },
+      en: {
+        title: "Git over SSH — Documentation (DOCS)",
+        s1Title: "1. Generating an SSH Key",
+        s1Desc: "Generate an Ed25519 key on your server:",
+        s2Title: "2. View Public Key",
+        s2Desc: "Copy public key and add it to GitHub -> Settings -> SSH and GPG keys:",
+        s3Title: "3. Clone Repository via SSH",
+        s3Desc: "Use SSH URL format git@github.com:User/Repo.git:"
+      }
+    };
+
+    function toggleGitLang() {
+      gitLang = gitLang === 'ru' ? 'en' : 'ru';
+      const t = gitTexts[gitLang];
+      document.getElementById('git-title').innerText = t.title;
+      document.getElementById('step1-title').innerText = t.s1Title;
+      document.getElementById('step1-desc').innerText = t.s1Desc;
+      document.getElementById('step2-title').innerText = t.s2Title;
+      document.getElementById('step2-desc').innerText = t.s2Desc;
+      document.getElementById('step3-title').innerText = t.s3Title;
+      document.getElementById('step3-desc').innerText = t.s3Desc;
+    }
+  </script>
+</body>
+</html>

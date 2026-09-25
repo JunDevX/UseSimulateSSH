@@ -1,0 +1,13 @@
+{
+  "name": "use-simulate-ssh",
+  "version": "1.2.0",
+  "description": "Interactive SSH simulation, Security & Git training platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

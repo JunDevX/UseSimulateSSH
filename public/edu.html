@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>UseSimulateSSH — Documentation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #0e1117; color: #c9d1d9; padding: 30px; line-height: 1.6; }
+    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 30px; }
+    h1 { color: #58a6ff; font-size: 28px; }
+    .lang-btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .lang-btn:hover { background: #30363d; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #79c0ff; font-size: 20px; margin-bottom: 12px; }
+    code { background: #21262d; color: #ff7b72; padding: 3px 6px; border-radius: 4px; font-family: monospace; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #30363d; padding: 10px; text-align: left; }
+    th { background: #21262d; color: #f0f6fc; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1 id="title">UseSimulateSSH — Справочник Команд (DOCS)</h1>
+    <div>
+      <button class="lang-btn" onclick="toggleLang()">EN / RU</button>
+      <a href="/" class="lang-btn" style="margin-left:10px;">Terminal</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 id="section1-title">Основы терминала и смена темы</h2>
+    <table>
+      <thead>
+        <tr><th>Команда</th><th>Пример</th><th id="th-desc1">Описание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>color</code></td><td><code>color 2</code></td><td id="desc-color">Смена цвета текста (0=Черный, 2=Зеленый, 4=Красный, b=Голубой, f=Белый).</td></tr>
+        <tr><td><code>theme</code></td><td><code>theme matrix</code></td><td id="desc-theme">Готовые темы оформления: matrix, classic, cyber, ubuntu.</td></tr>
+        <tr><td><code>clear</code></td><td><code>clear</code></td><td id="desc-clear">Очистить экран терминала.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 id="section2-title">Команды безопасности SSH и аудита</h2>
+    <table>
+      <thead>
+        <tr><th>Команда</th><th>Пример</th><th id="th-desc2">Описание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>cat /var/log/auth.log</code></td><td><code>cat /var/log/auth.log</code></td><td id="desc-catlog">Просмотр журнала попыток авторизации для поиска брутфорс атак.</td></tr>
+        <tr><td><code>set-config</code></td><td><code>set-config PermitRootLogin no</code></td><td id="desc-setcfg">Изменение ключевых параметров в /etc/ssh/sshd_config.</td></tr>
+        <tr><td><code>iptables</code></td><td><code>iptables -A INPUT -s 185.220.101.5 -j DROP</code></td><td id="desc-iptables">Блокировка атакующего IP-адреса на уровне фаервола.</td></tr>
+        <tr><td><code>audit-check</code></td><td><code>audit-check</code></td><td id="desc-audit">Запуск автоматической проверки защищенности сервера.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let currentLang = 'ru';
+    const texts = {
+      ru: {
+        title: "UseSimulateSSH — Справочник Команд (DOCS)",
+        sec1: "Основы терминала и смена темы",
+        sec2: "Команды безопасности SSH и аудита",
+        thDesc1: "Описание",
+        thDesc2: "Описание",
+        color: "Смена цвета текста (0=Черный, 2=Зеленый, 4=Красный, b=Голубой, f=Белый).",
+        theme: "Готовые темы оформления: matrix, classic, cyber, ubuntu.",
+        clear: "Очистить экран терминала.",
+        catlog: "Просмотр журнала попыток авторизации для поиска брутфорс атак.",
+        setcfg: "Изменение ключевых параметров в /etc/ssh/sshd_config.",
+        iptables: "Блокировка атакующего IP-адреса на уровне фаервола.",
+        audit: "Запуск автоматической проверки защищенности сервера."
+      },
+      en: {
+        title: "UseSimulateSSH — Command Reference (DOCS)",
+        sec1: "Terminal Basics & Color Themes",
+        sec2: "SSH Security & Audit Commands",
+        thDesc1: "Description",
+        thDesc2: "Description",
+        color: "Change text color (0=Black, 2=Green, 4=Red, b=Cyan, f=White).",
+        theme: "Preset terminal themes: matrix, classic, cyber, ubuntu.",
+        clear: "Clear terminal screen.",
+        catlog: "Inspect authorization log to detect brute-force attacks.",
+        setcfg: "Modify key settings in /etc/ssh/sshd_config.",
+        iptables: "Block attacker's IP address in firewall rules.",
+        audit: "Run automated server security evaluation."
+      }
+    };
+
+    function toggleLang() {
+      currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      const t = texts[currentLang];
+      document.getElementById('title').innerText = t.title;
+      document.getElementById('section1-title').innerText = t.sec1;
+      document.getElementById('section2-title').innerText = t.sec2;
+      document.getElementById('th-desc1').innerText = t.thDesc1;
+      document.getElementById('th-desc2').innerText = t.thDesc2;
+      document.getElementById('desc-color').innerText = t.color;
+      document.getElementById('desc-theme').innerText = t.theme;
+      document.getElementById('desc-clear').innerText = t.clear;
+      document.getElementById('desc-catlog').innerText = t.catlog;
+      document.getElementById('desc-setcfg').innerText = t.setcfg;
+      document.getElementById('desc-iptables').innerText = t.iptables;
+      document.getElementById('desc-audit').innerText = t.audit;
+    }
+  </script>
+</body>
+</html>
