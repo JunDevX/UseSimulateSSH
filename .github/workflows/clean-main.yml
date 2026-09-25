@@ -1,0 +1,43 @@
+name: Очистка main ветки
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clean-repository:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Remove all files except README.md and LICENSE
+        run: |
+          # Включаем dotglob, чтобы shopt/bash подтягивал и скрытые файлы (например, .gitignore, .github)
+          shopt -s dotglob
+          
+          # Удаляем всё, кроме README.md, LICENSE и служебной папки .git
+          for file in *; do
+            if [ "$file" != "README.md" ] && [ "$file" != "LICENSE" ] && [ "$file" != ".git" ]; do
+              rm -rf "$file"
+            fi
+          done
+
+      - name: Commit and Push changes
+        run: |
+          # Проверяем, есть ли что коммитить
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore: clean main branch (keep only README.md and LICENSE)"
+            git push origin main
+          else
+            echo "Nothing to remove or commit."
+          fi
